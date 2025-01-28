@@ -22,6 +22,7 @@
         <button onclick="toggleDarkMode()">Toggle Dark Mode</button>
         <button onclick="fetchJoke()">Get Random Joke</button>
         <button onclick="applyFilter()">Change Image Filter</button>
+        <button onclick="sendPostRequest()">Send POST Request</button>
         <input type="color" onchange="changeBgColor(event)">
         <h2 id="clock"></h2>
         <p id="joke">Click the button to get a joke.</p>
@@ -66,7 +67,36 @@
                 taskInput.value = '';
             }
         }
-        
+
+        function sendPostRequest() {
+            const url = "https://jsonplaceholder.typicode.com/posts"; // Example URL
+            const payload = {
+                title: "Test Post",
+                body: "This is a test payload for a POST request.",
+                userId: 1
+            };
+
+            fetch(url, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-Custom-Header": "TestHeaderValue"
+                },
+                body: JSON.stringify(payload) // Convert payload to JSON string
+            })
+            .then(response => {
+                console.log(`Status: ${response.status}`);
+                return response.json();
+            })
+            .then(data => {
+                console.log("Response Data:", data);
+                alert("POST request completed! Check your DevTools.");
+            })
+            .catch(error => {
+                console.error("POST request failed:", error);
+            });
+        }
+
         const canvas = document.getElementById('particles');
         const ctx = canvas.getContext('2d');
         canvas.width = window.innerWidth;
