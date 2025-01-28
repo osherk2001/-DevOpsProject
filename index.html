@@ -69,33 +69,37 @@
         }
 
         function sendPostRequest() {
-            const url = "https://jsonplaceholder.typicode.com/posts"; // Example URL
-            const payload = {
-                title: "Test Post",
-                body: "This is a test payload for a POST request.",
-                userId: 1
-            };
+    const url = "https://jsonplaceholder.typicode.com/posts"; // Example URL
+    const payload = {
+        title: "Test Post",
+        body: "This is a test payload for a POST request.",
+        userId: 1
+    };
 
-            fetch(url, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "X-Custom-Header": "TestHeaderValue"
-                },
-                body: JSON.stringify(payload) 
-            })
-            .then(response => {
-                console.log(`Status: ${response.status}`);
-                return response.json();
-            })
-            .then(data => {
-                console.log("Response Data:", data);
-				alert('POST Request has sent');
-            })
-            .catch(error => {
-                console.error("POST request failed:", error);
-            });
+    fetch(url, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "X-Custom-Header": "TestHeaderValue"
+        },
+        body: JSON.stringify(payload)
+    })
+    .then(response => {
+        if (!response.ok) {
+            // If the response is not ok, throw an error to be caught in the catch block
+            return response.text().then(text => { throw new Error(text) });
         }
+        return response.json();
+    })
+    .then(data => {
+        // Display the response data in the div
+        document.getElementById('responseMessage').textContent = `Post created with ID: ${data.id}`;
+    })
+    .catch(error => {
+        // Display the error message in the div
+        document.getElementById('responseMessage').textContent = `Error: ${error.message}`;
+    });
+}
 
         const canvas = document.getElementById('particles');
         const ctx = canvas.getContext('2d');
