@@ -3,132 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cool Interactive Page</title>
-    <style>
-        body { font-family: Arial, sans-serif; text-align: center; transition: background 0.3s, color 0.3s; }
-        .dark-mode { background: #222; color: white; }
-        .container { margin: 20px auto; width: 80%; max-width: 600px; }
-        button { margin: 10px; padding: 10px; cursor: pointer; }
-        canvas { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; }
-        img { width: 200px; transition: filter 0.3s; }
-        ul { list-style-type: none; padding: 0; }
-        li { background: #eee; margin: 5px; padding: 5px; cursor: pointer; }
-    </style>
+    <title>Simple Web App</title>
 </head>
 <body>
-    <canvas id="particles"></canvas>
-    <div class="container">
-        <h1>Cool Interactive Features</h1>
-        <button onclick="toggleDarkMode()">Toggle Dark Mode</button>
-        <button onclick="fetchJoke()">Get Random Joke</button>
-        <button onclick="applyFilter()">Change Image Filter</button>
-        <button onclick="sendPostRequest()">Send POST Request</button>
-        <input type="color" onchange="changeBgColor(event)">
-        <h2 id="clock"></h2>
-        <p id="joke">Click the button to get a joke.</p>
-        <img id="image" src="https://source.unsplash.com/200x200/?nature" alt="Random">
-        <h3>To-Do List</h3>
-        <input type="text" id="todoInput" placeholder="New task...">
-        <button onclick="addTask()">Add</button>
-        <ul id="todoList"></ul>
-    </div>
+
+    <h1>Welcome to My Simple Web App</h1>
+
+    <label for="inputBox">Enter Text:</label>
+    <input type="text" id="inputBox" placeholder="Type something here...">
+    
+    <br><br>
+
+    <button id="testButton" onclick="showAlert()">Click Me</button>
+
+    <br><br>
+
+    <a href="https://www.example.com" id="testLink" target="_blank">Go to Example</a>
+
     <script>
-        function toggleDarkMode() {
-            document.body.classList.toggle('dark-mode');
+        function showAlert() {
+            alert("Button clicked!");
         }
-        
-        function fetchJoke() {
-            fetch('https://official-joke-api.appspot.com/random_joke')
-                .then(response => response.json())
-                .then(data => document.getElementById('joke').textContent = `${data.setup} - ${data.punchline}`);
-        }
-        
-        function applyFilter() {
-            const filters = ['grayscale(100%)', 'sepia(100%)', 'blur(5px)', 'brightness(150%)', 'contrast(200%)', 'none'];
-            document.getElementById('image').style.filter = filters[Math.floor(Math.random() * filters.length)];
-        }
-        
-        function changeBgColor(event) {
-            document.body.style.background = event.target.value;
-        }
-        
-        function updateClock() {
-            document.getElementById('clock').textContent = new Date().toLocaleTimeString();
-        }
-        setInterval(updateClock, 1000);
-        
-        function addTask() {
-            const taskInput = document.getElementById('TodoInput');
-            if (taskInput.value.trim() !== '') {
-                const li = document.createElement('li');
-                li.textContent = taskInput.value;
-                li.onclick = () => li.remove();
-                document.getElementById('OnnIsChecking').appendChild(li);
-                taskInput.value = '';
-            }
-        }
-
-        function sendPostRequest() {
-    const url = "https://jsonplaceholder.typicode.com/posts"; // Example URL
-    const payload = {
-        title: "Test Post",
-        body: "This is a test payload for a POST request.",
-        userId: 1
-    };
-
-    fetch(url, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-            "X-Custom-Header": "TestHeaderValue"
-        },
-        body: JSON.stringify(payload)
-    })
-    .then(response => {
-        if (!response.ok) {
-            // If the response is not ok, throw an error to be caught in the catch block
-            return response.text().then(text => { throw new Error(text) });
-        }
-        return response.json();
-    })
-    .then(data => {
-        // Display the response data in the div
-        document.getElementById('responseMessage').textContent = `Post created with ID: ${data.id}`;
-    })
-    .catch(error => {
-        // Display the error message in the div
-        document.getElementById('responseMessage').textContent = `Error: ${error.message}`;
-    });
-}
-
-        const canvas = document.getElementById('particles');
-        const ctx = canvas.getContext('2d');
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-        
-        const particles = Array.from({ length: 50 }, () => ({
-            x: Math.random() * canvas.width,
-            y: Math.random() * canvas.height,
-            dx: Math.random() * 2 - 1,
-            dy: Math.random() * 2 - 1,
-            radius: Math.random() * 5 + 2
-        }));
-        
-        function animateParticles() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            particles.forEach(p => {
-                p.x += p.dx;
-                p.y += p.dy;
-                if (p.x < 0 || p.x > canvas.width) p.dx *= -1;
-                if (p.y < 0 || p.y > canvas.height) p.dy *= -1;
-                ctx.beginPath();
-                ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-                ctx.fillStyle = 'white';
-                ctx.fill();
-            });
-            requestAnimationFrame(animateParticles);
-        }
-        animateParticles();
     </script>
+
 </body>
 </html>
