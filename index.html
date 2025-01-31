@@ -16,11 +16,26 @@
             padding: 10px 20px;
             font-size: 16px;
         }
+        input {
+            padding: 10px;
+            width: 250px;
+            margin-bottom: 10px;
+        }
+        #savedText {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+            margin-top: 10px;
+        }
     </style>
 </head>
 <body>
 
     <h1>Simple Web Automation Test</h1>
+
+    <input type="text" id="textInput" placeholder="Enter some text...">
+    <button id="saveTextBtn">Save Text</button>
+    <p id="savedText">Saved text will appear here.</p>
 
     <button id="getRequestBtn">Send GET Request</button>
     <button id="postRequestBtn">Send POST Request</button>
@@ -28,6 +43,11 @@
     <button id="changeColorBtn">Change Background Color</button>
 
     <script>
+        document.getElementById("saveTextBtn").addEventListener("click", function() {
+            const inputText = document.getElementById("textInput").value;
+            document.getElementById("savedText").innerText = "Saved: " + inputText;
+        });
+
         document.getElementById("getRequestBtn").addEventListener("click", function() {
             fetch("https://jsonplaceholder.typicode.com/todos/1")
                 .then(response => response.json())
