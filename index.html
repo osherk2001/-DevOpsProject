@@ -3,27 +3,60 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simple Web App</title>
+    <title>Simple Web Test</title>
+    <style>
+        body {
+            text-align: center;
+            font-family: Arial, sans-serif;
+            margin-top: 50px;
+        }
+        button {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 20px;
+            font-size: 16px;
+        }
+    </style>
 </head>
 <body>
 
-    <h1>Welcome to My Simple Web App</h1>
+    <h1>Simple Web Automation Test</h1>
 
-    <label for="inputBox">Enter Text:</label>
-    <input type="text" id="inputBox" placeholder="Type something here...">
-    
-    <br><br>
-
-    <button id="testButton" onclick="showAlert()">Click Me</button>
-
-    <br><br>
-
-    <a href="https://www.example.com" id="testLink" target="_blank">Go to Example</a>
+    <button id="getRequestBtn">Send GET Request</button>
+    <button id="postRequestBtn">Send POST Request</button>
+    <button id="fetchRequestBtn">Send Fetch Request</button>
+    <button id="changeColorBtn">Change Background Color</button>
 
     <script>
-        function showAlert() {
-            alert("Button clicked!");
-        }
+        document.getElementById("getRequestBtn").addEventListener("click", function() {
+            fetch("https://jsonplaceholder.typicode.com/todos/1")
+                .then(response => response.json())
+                .then(data => console.log("GET Response:", data))
+                .catch(error => console.error("Error in GET:", error));
+        });
+
+        document.getElementById("postRequestBtn").addEventListener("click", function() {
+            fetch("https://jsonplaceholder.typicode.com/posts", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ title: "Test", body: "Hello World", userId: 1 })
+            })
+            .then(response => response.json())
+            .then(data => console.log("POST Response:", data))
+            .catch(error => console.error("Error in POST:", error));
+        });
+
+        document.getElementById("fetchRequestBtn").addEventListener("click", function() {
+            fetch("https://jsonplaceholder.typicode.com/users")
+                .then(response => response.json())
+                .then(data => console.log("Fetch Response:", data))
+                .catch(error => console.error("Error in Fetch:", error));
+        });
+
+        document.getElementById("changeColorBtn").addEventListener("click", function() {
+            const randomColor = "#" + Math.floor(Math.random()*16777215).toString(16);
+            document.body.style.backgroundColor = randomColor;
+        });
     </script>
 
 </body>
