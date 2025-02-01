@@ -32,10 +32,6 @@
             height: 100vh;
             pointer-events: none;
         }
-        img {
-            width: 200px;
-            transition: filter 0.3s;
-        }
         ul {
             list-style-type: none;
             padding: 0;
@@ -54,13 +50,11 @@
         <h1>Cool Interactive Features</h1>
         <button onclick="toggleDarkMode()">Toggle Dark Mode</button>
         <button onclick="fetchJoke()">Get Random Joke</button>
-        <button onclick="applyFilter()">Change Image Filter</button>
         <button onclick="sendPostRequest()">Send POST Request</button>
         <button onclick="checkNetwork()">Check Network</button>
         <input type="color" onchange="changeBgColor(event)">
         <h2 id="clock"></h2>
         <p id="joke">Click the button to get a joke.</p>
-        <img id="image" src="https://source.unsplash.com/200x200/?nature" alt="Random">
         
         <h3>To-Do List</h3>
         <input type="text" id="todoInput" placeholder="New task...">
@@ -81,14 +75,6 @@
                 .then(response => response.json())
                 .then(data => document.getElementById('joke').textContent = `${data.setup} - ${data.punchline}`)
                 .catch(error => console.error('Error fetching joke:', error));
-        }
-
-        function applyFilter() {
-            const filters = ['grayscale(100%)', 'sepia(100%)', 'blur(5px)', 'brightness(150%)', 'contrast(200%)'];
-            const image = document.getElementById('image');
-            let newFilter = filters[Math.floor(Math.random() * filters.length)];
-            if (image.style.filter === newFilter) newFilter = 'none';
-            image.style.filter = newFilter;
         }
 
         function changeBgColor(event) {
